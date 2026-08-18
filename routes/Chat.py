@@ -1,4 +1,5 @@
-from fastapi import APIRouter
+from fastapi import APIRouter, HTTPException
+from langchain_core.messages import HumanMessage
 from pydantic import BaseModel
 
 from agents.Graph import graph
@@ -12,5 +13,7 @@ class ChatRequest(BaseModel):
 
 @router.post("/chat")
 async def chat_agent(request: ChatRequest):
-    response = await graph.ainvoke({"user_message": request.message})
-    return {"response": response.get("response")}
+    if not request.message or not request.message.strip():
+        raise HTTPException(status_code=400, detail="Empty String not Allowed")
+    response = await graph.ainvoke({"messages": HumanMessage(content=request.message)})
+    return {"response": response["messages"][-1]}
