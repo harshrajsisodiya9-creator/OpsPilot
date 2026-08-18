@@ -1,9 +1,12 @@
+from langgraph.checkpoint.memory import MemorySaver
 from langgraph.graph import END, START, StateGraph
 
 from agents.LLm import call_agent
 from agents.routing import should_continue
 from agents.State import AgentState
 from agents.ToolNode import tasks_tools
+
+checkpointer = MemorySaver()
 
 builder = StateGraph(AgentState)
 
@@ -19,4 +22,4 @@ builder.add_conditional_edges(
     },
 )
 builder.add_edge("tasktool", "llm")
-graph = builder.compile()
+graph = builder.compile(checkpointer=checkpointer)
