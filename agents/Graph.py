@@ -6,8 +6,6 @@ from agents.routing import should_continue
 from agents.State import AgentState
 from agents.ToolNode import tasks_tools
 
-checkpointer = MemorySaver()
-
 builder = StateGraph(AgentState)
 
 builder.add_node("llm", call_agent)
@@ -22,4 +20,4 @@ builder.add_conditional_edges(
     },
 )
 builder.add_edge("tasktool", "llm")
-graph = builder.compile(checkpointer=checkpointer)
+graph = builder
