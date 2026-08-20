@@ -1,0 +1,12 @@
+langchain-community
+langchain-groq
+langgraph
+fastapi
+openai
+pydantic
+psycopg2-binary
+asyncpg
+sqlalchemy
+langgraph-checkpoint-postgres
+psycopg[binary]
+uvicorn
